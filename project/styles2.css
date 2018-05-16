@@ -1,0 +1,34 @@
+.bodyText {
+    width: 70%;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 20px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 50px;
+}
+
+p {
+    padding-top: 10px;
+    font-family: 'Prata', serif;
+}
+
+blockquote {
+    font-family: "Times New Roman", Times, serif;
+}
+
+code {
+    font-size: 20px;
+}
+
+iframe {
+    height: 500px;
+    width: 900px;
+    border: none;
+}
+
+.frame {
+    padding-top: 100px;
+}

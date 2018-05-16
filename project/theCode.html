@@ -1,0 +1,161 @@
+<html>
+
+<head>
+    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../project/styles2.css">
+</head>
+
+<body>
+    <code>
+    var canvas, lines, midRect, leftRect, rightRect, backColor, rectColor;<br>
+
+function setup() {<br>
+    canvas = createCanvas(windowWidth, windowHeight);<br>
+    canvas.position(0, 0);<br>
+    canvas.style('z-index', '-1');<br>
+    lines = new line1();<br>
+    midRect = new rectMid(lines.x);<br>
+    leftRect = new rectLeft(lines.x);<br>
+    rightRect = new rectRight(lines.x);<br>
+    backColor = '#FF2E4A';<br>
+    rectColor = '#41EAD4';<br>
+}<br>
+
+function draw() {<br>
+    // put drawing code here<br>
+    fill(rectColor);<br>
+    background(backColor);<br>
+
+    lines.grow();<br>
+    lines.drawIt();<br>
+
+    push();<br>
+    noStroke();<br>
+    if (lines.growth > windowHeight+300) {<br>
+        midRect.grow();<br>
+        midRect.drawIt();<br>
+    }<br>
+    pop();<br>
+        
+    if (lines.growth >= windowHeight) {<br>
+        if (midRect.growth >= windowHeight) {<br>
+
+            push();<br>
+            noStroke();<br>
+            leftRect.grow();<br>
+            rightRect.grow();<br>
+            leftRect.drawIt();<br>
+            rightRect.drawIt();<br>
+            pop();<br>
+
+            if (leftRect.growth >= 0 && rightRect.growth >= windowWidth) {<br>
+                lines.growth = 0;<br>
+                lines.x = floor(random(50, windowWidth - 200));<br>
+                midRect.growth = 0;<br>
+                midRect.x = lines.x;<br>
+
+                leftRect.growth = 0;<br>
+                rightRect.growth = 0;<br>
+                leftRect.x = lines.x;<br>
+                rightRect.x = lines.x;<br>
+
+                if (backColor == '#FF2E4A') {<br>
+                    backColor = '#41EAD4';<br>
+                    rectColor = '#FDFFFC';<br>
+                } else if (backColor == '#41EAD4') {<br>
+                    backColor = '#FDFFFC';<br>
+                    rectColor = '#EF32A2';<br>
+                } else if (backColor == '#FDFFFC') {<br>
+                    backColor = '#EF32A2';<br>
+                    rectColor = '#002642';<br>
+                } else if (backColor == '#EF32A2') {<br>
+                    backColor = '#002642';<br>
+                    rectColor = '#FF2E4A';<br>
+                } else {<br>
+                    backColor = '#FF2E4A';<br>
+                    rectColor = '#41EAD4';<br>
+                }<br>
+
+                redraw();<br>
+            }<br>
+        }<br>
+    }<br>
+}<br>
+
+function line1() {<br>
+    this.x = floor(random(50, windowWidth - 200));<br>
+    this.y = 0;<br>
+    this.growth = 0;<br>
+
+    this.grow = function() {<br>
+        this.growth += 2;<br>
+    };<br>
+
+    this.drawIt = function() {<br>
+        line(this.x - 1, this.y, this.x - 1, this.growth);<br>
+        line(this.x + 200, this.y, this.x + 200, this.growth);<br>
+    };<br>
+}
+
+
+function rectMid(lineX) {<br>
+    this.x = lineX;<br>
+    this.y = 0;<br>
+    this.w = 200;<br>
+    this.growth = 0;<br>
+
+    this.grow = function() {<br>
+        this.growth+=2;<br>
+    };<br>
+
+    this.drawIt = function() {<br>
+        rect(this.x, this.y, this.w, this.growth);<br>
+    };<br>
+}
+
+function rectLeft(lineX) {<br>
+    this.x = lineX;<br>
+    this.y = 0;<br>
+    this.growth = 0;<br>
+    this.h = windowHeight;<br>
+
+
+    this.grow = function() {<br>
+        this.growth += 2;<br>
+    };<br>
+
+    this.drawIt = function() {<br>
+        rect(this.x, this.y, -this.growth, this.h);<br>
+    };<br>
+}
+
+function rectRight(lineX) {<br>
+    this.x = lineX;<br>
+    this.y = 0;<br>
+    this.growth = 0;<br>
+    this.h = windowHeight;<br>
+
+
+    this.grow = function() {<br>
+        this.growth += 2;<br>
+    };<br>
+
+    this.drawIt = function() {<br>
+        rect(this.x + 200, this.y, this.growth, this.h);<br>
+    };<br>
+}<br>
+
+
+function windowResized() {<br>
+    resizeCanvas(windowWidth, windowHeight);<br>
+}<br>
+    </code>
+</body>
+
+</html>
